@@ -2,13 +2,8 @@ package datastore
 
 import (
 	"context"
-	"crypto/tls"
-	"database/sql"
-	"time"
 
 	"github.com/uptrace/bun"
-	"github.com/uptrace/bun/dialect/pgdialect"
-	"github.com/uptrace/bun/driver/pgdriver"
 	"github.com/wasuwa/night-view-api/domain/model"
 	"github.com/wasuwa/night-view-api/domain/repository"
 )
@@ -33,21 +28,22 @@ func (ns *nightViewStore) FindByID(ctx context.Context, id string) (*model.Night
 
 // NewDB データベース接続を初期化する
 func NewDB() *bun.DB {
-	pgConn := pgdriver.NewConnector(
-		pgdriver.WithNetwork("tcp"),
-		pgdriver.WithAddr("localhost:5437"),
-		pgdriver.WithTLSConfig(&tls.Config{InsecureSkipVerify: true}),
-		pgdriver.WithUser("test"),
-		pgdriver.WithPassword("test"),
-		pgdriver.WithDatabase("test"),
-		pgdriver.WithApplicationName("myapp"),
-		pgdriver.WithTimeout(5 * time.Second),
-		pgdriver.WithDialTimeout(5 * time.Second),
-		pgdriver.WithReadTimeout(5 * time.Second),
-		pgdriver.WithWriteTimeout(5 * time.Second),
-		pgdriver.WithConnParams(map[string]interface{}{
-			"search_path": "my_search_path",
-		}),
-	)
-	return bun.NewDB(sql.OpenDB(pgConn), pgdialect.New())
+	// pgConn := pgdriver.NewConnector(
+	// 	pgdriver.WithNetwork("tcp"),
+	// 	pgdriver.WithAddr("localhost:5437"),
+	// 	pgdriver.WithTLSConfig(&tls.Config{InsecureSkipVerify: true}),
+	// 	pgdriver.WithUser("test"),
+	// 	pgdriver.WithPassword("test"),
+	// 	pgdriver.WithDatabase("test"),
+	// 	pgdriver.WithApplicationName("myapp"),
+	// 	pgdriver.WithTimeout(5 * time.Second),
+	// 	pgdriver.WithDialTimeout(5 * time.Second),
+	// 	pgdriver.WithReadTimeout(5 * time.Second),
+	// 	pgdriver.WithWriteTimeout(5 * time.Second),
+	// 	pgdriver.WithConnParams(map[string]interface{}{
+	// 		"search_path": "my_search_path",
+	// 	}),
+	// )
+	// return bun.NewDB(sql.OpenDB(pgConn), pgdialect.New())
+	return &bun.DB{}
 }
