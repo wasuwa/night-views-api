@@ -2,6 +2,8 @@ openapi: "3.0.0"
 info:
   version: 1.0.0
   title: 夜を巡るAPIのSwagger定義
+servers:
+  - url: /v1
 paths:
   /night-views/{id}:
     get:
