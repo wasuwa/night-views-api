@@ -1,3 +1,13 @@
 {
-  "cSpell.words": ["", "initdb", "pgdialect", "pgdriver", "testdata", "usecase"]
+  "cSpell.words": [
+    "",
+    "codegen",
+    "initdb",
+    "labstack",
+    "oapi",
+    "pgdialect",
+    "pgdriver",
+    "testdata",
+    "usecase"
+  ]
 }

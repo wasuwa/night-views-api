@@ -1,9 +1,10 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
+	"log"
 
+	"github.com/labstack/echo/v4"
+	"github.com/wasuwa/night-view-api/api"
 	"github.com/wasuwa/night-view-api/handler"
 	"github.com/wasuwa/night-view-api/infrastructure/datastore"
 	"github.com/wasuwa/night-view-api/usecase"
@@ -15,7 +16,10 @@ func main() {
 	nightViewUsecase := usecase.NewNightViewUsecase(nightViewRepository)
 	nightViewHandler := handler.NewNightViewHandler(nightViewUsecase)
 
-	http.HandleFunc("/night-view", nightViewHandler.FetchNightViewByID)
-	fmt.Println("Server is running on port 8080")
-	http.ListenAndServe(":8080", nil)
+	server := api.NewServer(nightViewHandler)
+
+	e := echo.New()
+	api.RegisterHandlers(e, server)
+
+	log.Fatal(e.Start(":8080"))
 }

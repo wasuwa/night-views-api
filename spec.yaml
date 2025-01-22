@@ -1,0 +1,70 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: 夜を巡るAPIのSwagger定義
+paths:
+  /night-views/{id}:
+    get:
+      summary: 夜景詳細取得
+      description: 夜景の詳細を取得するAPI
+      operationId: fetchNightViewById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 夜景ID
+          schema:
+            type: string
+            minLength: 36
+            maxLength: 36
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NightView'
+components:
+  schemas:
+    NightView:
+      description: 夜景情報
+      type: object
+      required:
+        - id
+        - title
+        - post_code
+        - prefectures
+        - city
+        - address
+        - image_url
+        - longitude
+        - latitude
+      properties:
+        id:
+          description: 夜景ID
+          type: string
+          format: uuid
+        title:
+          description: タイトル
+          type: string
+        post_code:
+          description: 郵便番号
+          type: string
+        prefectures:
+          description: 都道府県
+          type: string
+        city:
+          description: 市区町村
+          type: string
+        address:
+          description: 住所
+          type: string
+        image_url:
+          description: 画像URL
+          type: string
+        longitude:
+          description: 経度
+          type: number
+        latitude:
+          description: 緯度
+          type: number

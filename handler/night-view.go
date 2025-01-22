@@ -1,34 +1,32 @@
 package handler
 
 import (
-	"encoding/json"
 	"net/http"
 
+	"github.com/labstack/echo/v4"
 	"github.com/wasuwa/night-view-api/usecase"
 )
 
 // NightViewHandler 夜景のハンドラ
 type NightViewHandler interface {
-	FetchNightViewByID(http.ResponseWriter, *http.Request)
+	FetchNightViewById(ctx echo.Context, id string) error
 }
 
-type nightViewHandler struct {
+// NightViewHandlerImpl NightViewHandlerの実装
+type NightViewHandlerImpl struct {
 	nightViewUsecase usecase.NightViewUsecase
 }
 
 // NewNightViewHandler NightViewHandlerの実装を初期化する
 func NewNightViewHandler(us usecase.NightViewUsecase) NightViewHandler {
-	return &nightViewHandler{nightViewUsecase: us}
+	return &NightViewHandlerImpl{nightViewUsecase: us}
 }
 
 // FetchNightViewByID IDに紐づく夜景を取得する
-func (nh *nightViewHandler) FetchNightViewByID(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-	id := r.URL.Query().Get("id")
-	nightView, err := nh.nightViewUsecase.FetchNightViewByID(ctx, id)
+func (h *NightViewHandlerImpl) FetchNightViewById(ctx echo.Context, id string) error {
+	nightView, err := h.nightViewUsecase.FetchNightViewByID(ctx.Request().Context(), id)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		return ctx.JSON(http.StatusInternalServerError, err.Error())
 	}
-	json.NewEncoder(w).Encode(nightView)
+	return ctx.JSON(http.StatusOK, nightView)
 }
