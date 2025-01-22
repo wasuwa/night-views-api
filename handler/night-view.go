@@ -7,6 +7,7 @@ import (
 	"github.com/wasuwa/night-view-api/usecase"
 )
 
+// NightViewHandler 夜景のハンドラ
 type NightViewHandler interface {
 	FetchNightViewByID(http.ResponseWriter, *http.Request)
 }

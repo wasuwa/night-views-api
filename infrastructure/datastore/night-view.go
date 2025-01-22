@@ -20,7 +20,6 @@ type nightViewStore struct {
 // NewNightViewStore NightViewRepositoryの実装を初期化する
 func NewNightViewStore(db *bun.DB) repository.NightViewRepository {
 	return &nightViewStore{db: db}
-	
 }
 
 // FindByID IDに紐づく夜景を取得する

@@ -7,6 +7,7 @@ import (
 	"github.com/wasuwa/night-view-api/domain/repository"
 )
 
+// NightViewUsecase 夜景のユースケース
 type NightViewUsecase interface {
 	FetchNightViewByID(ctx context.Context, id string) (*model.NightView, error)
 }
