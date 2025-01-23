@@ -8,6 +8,8 @@ services:
       dockerfile: Dockerfile.local
     ports:
       - "8080:8080"
+    volumes:
+      - .:/go/src/github.com/wasuwa/night-view-api
     depends_on:
       - db
   db:
