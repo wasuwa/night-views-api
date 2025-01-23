@@ -9,7 +9,7 @@ paths:
     get:
       summary: 夜景詳細取得
       description: 夜景の詳細を取得するAPI
-      operationId: fetchNightViewById
+      operationId: fetchNightViewByID
       parameters:
         - name: id
           in: path

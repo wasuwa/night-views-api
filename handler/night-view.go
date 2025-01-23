@@ -9,7 +9,7 @@ import (
 
 // NightViewHandler 夜景のハンドラ
 type NightViewHandler interface {
-	FetchNightViewById(ctx echo.Context, id string) error
+	FetchNightViewByID(ctx echo.Context, id string) error
 }
 
 // NightViewHandlerImpl NightViewHandlerの実装
@@ -23,7 +23,7 @@ func NewNightViewHandler(us usecase.NightViewUsecase) NightViewHandler {
 }
 
 // FetchNightViewByID IDに紐づく夜景を取得する
-func (h *NightViewHandlerImpl) FetchNightViewById(ctx echo.Context, id string) error {
+func (h *NightViewHandlerImpl) FetchNightViewByID(ctx echo.Context, id string) error {
 	nightView, err := h.nightViewUsecase.FetchNightViewByID(ctx.Request().Context(), id)
 	if err != nil {
 		return ctx.JSON(http.StatusInternalServerError, err.Error())

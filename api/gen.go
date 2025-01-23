@@ -46,7 +46,7 @@ type NightView struct {
 type ServerInterface interface {
 	// 夜景詳細取得
 	// (GET /night-views/{id})
-	FetchNightViewById(ctx echo.Context, id string) error
+	FetchNightViewByID(ctx echo.Context, id string) error
 }
 
 // ServerInterfaceWrapper converts echo contexts to parameters.
@@ -54,8 +54,8 @@ type ServerInterfaceWrapper struct {
 	Handler ServerInterface
 }
 
-// FetchNightViewById converts echo context to params.
-func (w *ServerInterfaceWrapper) FetchNightViewById(ctx echo.Context) error {
+// FetchNightViewByID converts echo context to params.
+func (w *ServerInterfaceWrapper) FetchNightViewByID(ctx echo.Context) error {
 	var err error
 	// ------------- Path parameter "id" -------------
 	var id string
@@ -66,7 +66,7 @@ func (w *ServerInterfaceWrapper) FetchNightViewById(ctx echo.Context) error {
 	}
 
 	// Invoke the callback with all the unmarshaled arguments
-	err = w.Handler.FetchNightViewById(ctx, id)
+	err = w.Handler.FetchNightViewByID(ctx, id)
 	return err
 }
 
@@ -98,6 +98,6 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 		Handler: si,
 	}
 
-	router.GET(baseURL+"/night-views/:id", wrapper.FetchNightViewById)
+	router.GET(baseURL+"/night-views/:id", wrapper.FetchNightViewByID)
 
 }
