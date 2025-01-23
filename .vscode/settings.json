@@ -1,13 +1,17 @@
 {
   "cSpell.words": [
     "",
+    "bundebug",
     "codegen",
+    "godotenv",
     "initdb",
+    "joho",
     "labstack",
     "oapi",
     "pgdialect",
     "pgdriver",
     "testdata",
+    "uptrace",
     "usecase"
   ]
 }

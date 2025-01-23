@@ -3,15 +3,20 @@ module github.com/wasuwa/night-view-api
 go 1.23.2
 
 require (
+	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo/v4 v4.13.3
 	github.com/oapi-codegen/oapi-codegen/v2 v2.4.1
 	github.com/oapi-codegen/runtime v1.1.1
 	github.com/uptrace/bun v1.2.8
+	github.com/uptrace/bun/dialect/pgdialect v1.2.8
+	github.com/uptrace/bun/driver/pgdriver v1.2.8
+	github.com/uptrace/bun/extra/bundebug v1.2.8
 )
 
 require (
 	github.com/apapsch/go-jsonmerge/v2 v2.0.0 // indirect
 	github.com/dprotaso/go-yit v0.0.0-20220510233725-9ba8df137936 // indirect
+	github.com/fatih/color v1.18.0 // indirect
 	github.com/getkin/kin-openapi v0.127.0 // indirect
 	github.com/go-openapi/jsonpointer v0.21.0 // indirect
 	github.com/go-openapi/swag v0.23.0 // indirect
@@ -42,4 +47,5 @@ require (
 	golang.org/x/tools v0.21.1-0.20240508182429-e35e4ccd0d2d // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
+	mellium.im/sasl v0.3.2 // indirect
 )

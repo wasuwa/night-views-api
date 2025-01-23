@@ -7,12 +7,17 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/wasuwa/night-view-api/api"
+	"github.com/wasuwa/night-view-api/config"
 	"github.com/wasuwa/night-view-api/handler"
 	"github.com/wasuwa/night-view-api/infrastructure/datastore"
 	"github.com/wasuwa/night-view-api/usecase"
 )
 
 func main() {
+	if err := config.LoadEnv(); err != nil {
+		log.Fatalf("Failed to load environment variables: %v", err)
+	}
+
 	db := datastore.NewDB()
 	nightViewRepository := datastore.NewNightViewStore(db)
 	nightViewUsecase := usecase.NewNightViewUsecase(nightViewRepository)
