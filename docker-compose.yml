@@ -11,9 +11,9 @@ services:
     volumes:
       - .:/go/src/github.com/wasuwa/night-view-api
     depends_on:
-      - db
-  db:
-    container_name: night-view-db
+      - postgres
+  postgres:
+    container_name: night-view-postgres
     image: postgres:17.2
     ports:
       - "5432:5432"
