@@ -2,9 +2,7 @@ package datastore
 
 import (
 	"context"
-	"crypto/tls"
 	"database/sql"
-	"time"
 
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
@@ -36,20 +34,11 @@ func (ns *nightViewStore) FindByID(ctx context.Context, id string) (*model.Night
 // NewDB データベース接続を初期化する
 func NewDB() *bun.DB {
 	pgConn := pgdriver.NewConnector(
-		pgdriver.WithNetwork("tcp"),
 		pgdriver.WithAddr("localhost:5437"),
-		pgdriver.WithTLSConfig(&tls.Config{InsecureSkipVerify: true}),
 		pgdriver.WithUser(config.PostgresUser),
 		pgdriver.WithPassword(config.PostgresPassword),
-		pgdriver.WithDatabase("test"),
+		pgdriver.WithDatabase(config.PostgresDB),
 		pgdriver.WithApplicationName("myapp"),
-		pgdriver.WithTimeout(5*time.Second),
-		pgdriver.WithDialTimeout(5*time.Second),
-		pgdriver.WithReadTimeout(5*time.Second),
-		pgdriver.WithWriteTimeout(5*time.Second),
-		pgdriver.WithConnParams(map[string]interface{}{
-			"search_path": "my_search_path",
-		}),
 	)
 	db := bun.NewDB(sql.OpenDB(pgConn), pgdialect.New())
 	db.AddQueryHook(bundebug.NewQueryHook(

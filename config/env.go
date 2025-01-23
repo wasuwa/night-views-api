@@ -7,10 +7,12 @@ import (
 )
 
 var (
-	// PostgresUser Postgresのユーザー名
+	// PostgresUser PostgresSQLのユーザー名
 	PostgresUser string
-	// PostgresPassword Postgresのパスワード
+	// PostgresPassword PostgresSQLのパスワード
 	PostgresPassword string
+	// PostgresDB PostgresSQLのデータベース名
+	PostgresDB string
 )
 
 // LoadEnv 環境変数を読み込む
@@ -20,5 +22,6 @@ func LoadEnv() error {
 	}
 	PostgresUser = os.Getenv("POSTGRES_USER")
 	PostgresPassword = os.Getenv("POSTGRES_PASSWORD")
+	PostgresDB = os.Getenv("POSTGRES_DB")
 	return nil
 }
