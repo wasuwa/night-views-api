@@ -1,5 +1,4 @@
 root = "."
-testdata_dir = "testdata"
 tmp_dir = "tmp"
 
 [build]
@@ -32,6 +31,5 @@ tmp_dir = "tmp"
 
 [misc]
   clean_on_exit = true
-
 [screen]
   clear_on_rebuild = false
