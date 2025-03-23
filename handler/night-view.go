@@ -24,9 +24,9 @@ func NewNightViewHandler(us usecase.NightViewUsecase) NightViewHandler {
 
 // FetchNightViewByID IDに紐づく夜景を取得する
 func (h *NightViewHandlerImpl) FetchNightViewByID(ctx echo.Context, id string) error {
-	nightView, err := h.nightViewUsecase.FetchNightViewByID(ctx.Request().Context(), id)
-	if err != nil {
-		return ctx.JSON(http.StatusInternalServerError, err.Error())
+	nightView, apiErr := h.nightViewUsecase.FetchNightViewByID(ctx.Request().Context(), id)
+	if apiErr != nil {
+		return ctx.JSON(apiErr.StatusCode, apiErr)
 	}
 	return ctx.JSON(http.StatusOK, nightView)
 }
