@@ -7,7 +7,6 @@ import (
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
 	"github.com/uptrace/bun/driver/pgdriver"
-	"github.com/uptrace/bun/extra/bundebug"
 	"github.com/wasuwa/night-view-api/config"
 	"github.com/wasuwa/night-view-api/domain/model"
 	"github.com/wasuwa/night-view-api/domain/repository"
@@ -64,8 +63,5 @@ func NewDB() *bun.DB {
 		pgdriver.WithInsecure(true),
 	)
 	db := bun.NewDB(sql.OpenDB(pgConn), pgdialect.New())
-	db.AddQueryHook(bundebug.NewQueryHook(
-		bundebug.WithVerbose(true),
-	))
 	return db
 }
