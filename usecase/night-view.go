@@ -30,5 +30,9 @@ func (nu *nightViewUsecase) FetchNightViewByID(ctx context.Context, id string) (
 		slog.ErrorContext(ctx, "夜景情報の取得ができません", slog.String("Error", err.Error()), slog.String("ID", id))
 		return nil, apierrors.InternalServerError
 	}
+	if nightView == nil {
+		slog.WarnContext(ctx, "夜景情報が見つかりません", slog.String("ID", id))
+		return nil, apierrors.NightViewNotFound
+	}
 	return nightView, nil
 }

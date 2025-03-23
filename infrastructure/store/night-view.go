@@ -3,6 +3,7 @@ package store
 import (
 	"context"
 	"database/sql"
+	"errors"
 
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
@@ -49,13 +50,17 @@ func NewNightViewStore(db *bun.DB) repository.NightViewRepository {
 // FindByID IDに紐づく夜景を取得する
 func (ns *nightViewStore) FindByID(ctx context.Context, id string) (*model.NightView, error) {
 	n := &NightView{ID: id}
-	if err := ns.db.NewSelect().
+	err := ns.db.NewSelect().
 		Column("id", "title", "image_url", "post_code", "address").
 		ColumnExpr("extensions.st_x(location::extensions.geometry) AS longitude").
 		ColumnExpr("extensions.st_y(location::extensions.geometry) AS latitude").
 		Model(n).
 		WherePK().
-		Scan(ctx); err != nil {
+		Scan(ctx)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, nil
+		}
 		return nil, err
 	}
 	return n.domainModel(), nil
