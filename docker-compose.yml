@@ -14,7 +14,7 @@ services:
       - postgres
   postgres:
     container_name: night-view-postgres
-    image: postgres:17.2
+    image: postgis/postgis:17-3.4
     ports:
       - "5432:5432"
     environment:

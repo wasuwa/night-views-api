@@ -9,6 +9,8 @@
     "oapi",
     "pgdialect",
     "pgdriver",
+    "plpgsql",
+    "postgis",
     "testdata",
     "uptrace",
     "usecase"
