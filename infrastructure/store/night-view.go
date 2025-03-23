@@ -15,7 +15,7 @@ import (
 // NightView 夜景
 type NightView struct {
 	bun.BaseModel `bun:"table:night_views"`
-	ID            string `bun:"pk"`
+	ID            string `bun:"id,pk"`
 	Title         string
 	ImageURL      string
 	PostCode      string
