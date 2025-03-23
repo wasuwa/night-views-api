@@ -20,7 +20,21 @@ type NightView struct {
 	ImageURL      string
 	PostCode      string
 	Address       string
-	Location      string
+	Longitude     float64
+	Latitude      float64
+}
+
+// domainModel ドメインモデルに変換する
+func (n NightView) domainModel() *model.NightView {
+	return &model.NightView{
+		ID:        n.ID,
+		Title:     n.Title,
+		ImageURL:  n.ImageURL,
+		PostCode:  n.PostCode,
+		Address:   n.Address,
+		Longitude: n.Longitude,
+		Latitude:  n.Latitude,
+	}
 }
 
 type nightViewStore struct {
@@ -35,18 +49,16 @@ func NewNightViewStore(db *bun.DB) repository.NightViewRepository {
 // FindByID IDに紐づく夜景を取得する
 func (ns *nightViewStore) FindByID(ctx context.Context, id string) (*model.NightView, error) {
 	n := &NightView{ID: id}
-	if err := ns.db.NewSelect().Model(n).WherePK().Scan(ctx); err != nil {
+	if err := ns.db.NewSelect().
+		Column("id", "title", "image_url", "post_code", "address").
+		ColumnExpr("extensions.st_x(location::extensions.geometry) AS longitude").
+		ColumnExpr("extensions.st_y(location::extensions.geometry) AS latitude").
+		Model(n).
+		WherePK().
+		Scan(ctx); err != nil {
 		return nil, err
 	}
-	return &model.NightView{
-		ID:       n.ID,
-		Title:    n.Title,
-		ImageURL: n.ImageURL,
-		PostCode: n.PostCode,
-		Address:  n.Address,
-		// Latitude:    n.Latitude,
-		// Longitude:   n.Longitude,
-	}, nil
+	return n.domainModel(), nil
 }
 
 // NewDB データベース接続を初期化する
