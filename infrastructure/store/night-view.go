@@ -15,16 +15,15 @@ import (
 
 // NightView 夜景
 type NightView struct {
-	bun.BaseModel
-	ID          string `bun:"id,pk"`
-	Title       string
-	PostCode    string
-	Prefectures string
-	City        string
-	Address     string
-	ImageURL    string
-	Latitude    float64
-	Longitude   float64
+	bun.BaseModel `bun:"table:night_views"`
+	ID            string `bun:"id,pk"`
+	Title         string
+	PostCode      string
+	Prefecture    string
+	City          string
+	Address       string
+	ImageURL      string
+	Location      string
 }
 
 type nightViewStore struct {
@@ -43,15 +42,15 @@ func (ns *nightViewStore) FindByID(ctx context.Context, id string) (*model.Night
 		return nil, err
 	}
 	return &model.NightView{
-		ID:          n.ID,
-		Title:       n.Title,
-		PostCode:    n.PostCode,
-		Prefectures: n.Prefectures,
-		City:        n.City,
-		Address:     n.Address,
-		ImageURL:    n.ImageURL,
-		Latitude:    n.Latitude,
-		Longitude:   n.Longitude,
+		ID:         n.ID,
+		Title:      n.Title,
+		PostCode:   n.PostCode,
+		Prefecture: n.Prefecture,
+		City:       n.City,
+		Address:    n.Address,
+		ImageURL:   n.ImageURL,
+		// Latitude:    n.Latitude,
+		// Longitude:   n.Longitude,
 	}, nil
 }
 
