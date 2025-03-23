@@ -34,11 +34,9 @@ CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA extensions;
 CREATE TABLE IF NOT EXISTS public.night_views(
   id UUID NOT NULL default gen_random_uuid(),
   title TEXT NOT NULL,
-  post_code TEXT NOT NULL,
-  prefecture TEXT NOT NULL,
-  city TEXT NOT NULL,
-  address TEXT NOT NULL,
   image_url TEXT NOT NULL,
+  post_code TEXT NOT NULL,
+  address TEXT NOT NULL,
   location extensions.GEOGRAPHY NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP

@@ -17,11 +17,9 @@ type NightView struct {
 	bun.BaseModel `bun:"table:night_views"`
 	ID            string `bun:"pk"`
 	Title         string
-	PostCode      string
-	Prefecture    string
-	City          string
-	Address       string
 	ImageURL      string
+	PostCode      string
+	Address       string
 	Location      string
 }
 
@@ -41,13 +39,11 @@ func (ns *nightViewStore) FindByID(ctx context.Context, id string) (*model.Night
 		return nil, err
 	}
 	return &model.NightView{
-		ID:         n.ID,
-		Title:      n.Title,
-		PostCode:   n.PostCode,
-		Prefecture: n.Prefecture,
-		City:       n.City,
-		Address:    n.Address,
-		ImageURL:   n.ImageURL,
+		ID:       n.ID,
+		Title:    n.Title,
+		ImageURL: n.ImageURL,
+		PostCode: n.PostCode,
+		Address:  n.Address,
 		// Latitude:    n.Latitude,
 		// Longitude:   n.Longitude,
 	}, nil
@@ -62,6 +58,5 @@ func NewDB() *bun.DB {
 		pgdriver.WithDatabase(config.PostgresDB),
 		pgdriver.WithInsecure(true),
 	)
-	db := bun.NewDB(sql.OpenDB(pgConn), pgdialect.New())
-	return db
+	return bun.NewDB(sql.OpenDB(pgConn), pgdialect.New())
 }
