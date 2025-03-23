@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"log/slog"
 
 	apierrors "github.com/wasuwa/night-view-api/api-errors"
 	"github.com/wasuwa/night-view-api/domain/model"
@@ -26,6 +27,7 @@ func NewNightViewUsecase(rp repository.NightViewRepository) NightViewUsecase {
 func (nu *nightViewUsecase) FetchNightViewByID(ctx context.Context, id string) (*model.NightView, *apierrors.APIError) {
 	nightView, err := nu.nightViewRepository.FindByID(ctx, id)
 	if err != nil {
+		slog.ErrorContext(ctx, "夜景情報の取得ができません", slog.String("Error", err.Error()), slog.String("ID", id))
 		return nil, apierrors.InternalServerError
 	}
 	return nightView, nil

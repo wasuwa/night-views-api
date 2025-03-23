@@ -10,6 +10,7 @@ import (
 	"github.com/wasuwa/night-view-api/config"
 	"github.com/wasuwa/night-view-api/handler"
 	"github.com/wasuwa/night-view-api/infrastructure/store"
+	"github.com/wasuwa/night-view-api/middlewares"
 	"github.com/wasuwa/night-view-api/usecase"
 )
 
@@ -32,7 +33,7 @@ func main() {
 		middleware.Logger(),
 		middleware.Recover(),
 		middleware.CSRF(),
-		middleware.RequestID(),
+		middlewares.WithRequestID,
 		middleware.Secure(),
 		middleware.TimeoutWithConfig(middleware.TimeoutConfig{
 			Skipper:      middleware.DefaultSkipper,
