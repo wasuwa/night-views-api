@@ -9,7 +9,6 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/oapi-codegen/runtime"
-	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
 // NearestStation 最寄り駅情報
@@ -33,7 +32,7 @@ type NightView struct {
 	City string `json:"city"`
 
 	// Id 夜景ID
-	Id openapi_types.UUID `json:"id"`
+	Id string `json:"id"`
 
 	// ImageUrl 画像URL
 	ImageUrl string `json:"image_url"`

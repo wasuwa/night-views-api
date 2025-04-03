@@ -60,7 +60,6 @@ components:
         id:
           description: 夜景ID
           type: string
-          format: uuid
         title:
           description: タイトル
           type: string
