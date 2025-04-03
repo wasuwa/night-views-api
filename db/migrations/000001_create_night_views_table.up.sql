@@ -32,7 +32,7 @@ CREATE SCHEMA IF NOT EXISTS extensions;
 CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA extensions;
 
 CREATE TABLE IF NOT EXISTS public.night_views(
-  id UUID NOT NULL default gen_random_uuid(),
+  id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   title TEXT NOT NULL,
   image_url TEXT NOT NULL,
   post_code TEXT NOT NULL,
