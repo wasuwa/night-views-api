@@ -15,12 +15,16 @@ type NightViewUsecase interface {
 }
 
 type nightViewUsecase struct {
-	nightViewRepository repository.NightViewRepository
+	nightViewRepository      repository.NightViewRepository
+	nearestStationRepository repository.NearestStationRepository
 }
 
 // NewNightViewUsecase NightViewUsecaseの実装を初期化する
-func NewNightViewUsecase(rp repository.NightViewRepository) NightViewUsecase {
-	return &nightViewUsecase{nightViewRepository: rp}
+func NewNightViewUsecase(nvRepo repository.NightViewRepository, nsRepo repository.NearestStationRepository) NightViewUsecase {
+	return &nightViewUsecase{
+		nightViewRepository:      nvRepo,
+		nearestStationRepository: nsRepo,
+	}
 }
 
 // FetchNightViewByID IDに紐づく夜景を取得する
@@ -34,5 +38,12 @@ func (nu *nightViewUsecase) FetchNightViewByID(ctx context.Context, id string) (
 		slog.WarnContext(ctx, "夜景情報が見つかりません", slog.String("ID", id))
 		return nil, apierrors.NightViewNotFound
 	}
+
+	nearestStations, err := nu.nearestStationRepository.FindByNightViewID(ctx, id)
+	if err != nil {
+		slog.ErrorContext(ctx, "最寄り駅一覧の取得ができません", slog.String("Error", err.Error()), slog.String("NightViewID", id))
+		return nil, apierrors.InternalServerError
+	}
+	nightView.NearestStations = nearestStations
 	return nightView, nil
 }

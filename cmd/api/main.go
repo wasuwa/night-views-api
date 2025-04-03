@@ -22,7 +22,8 @@ func main() {
 
 	db := database.NewDB()
 	nightViewRepository := store.NewNightViewStore(db)
-	nightViewUsecase := usecase.NewNightViewUsecase(nightViewRepository)
+	nearestStationRepository := store.NewNearestStationStore(db)
+	nightViewUsecase := usecase.NewNightViewUsecase(nightViewRepository, nearestStationRepository)
 	nightViewHandler := handler.NewNightViewHandler(nightViewUsecase)
 
 	server := api.NewServer(nightViewHandler)

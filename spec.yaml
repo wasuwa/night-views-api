@@ -18,14 +18,31 @@ paths:
             minLength: 36
             maxLength: 36
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NightView'
+                $ref: "#/components/schemas/NightView"
 components:
   schemas:
+    NearestStation:
+      description: 最寄り駅情報
+      type: object
+      required:
+        - route_name
+        - station_name
+        - walking_time_from_station
+      properties:
+        route_name:
+          description: 路線名
+          type: string
+        station_name:
+          description: 駅名
+          type: string
+        walking_time_from_station:
+          description: 駅からの徒歩時間（分）
+          type: integer
     NightView:
       description: 夜景情報
       type: object
@@ -68,3 +85,8 @@ components:
         latitude:
           description: 緯度
           type: number
+        nearest_stations:
+          description: 最寄り駅情報
+          type: array
+          items:
+            $ref: "#/components/schemas/NearestStation"

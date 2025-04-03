@@ -12,6 +12,18 @@ import (
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
+// NearestStation 最寄り駅情報
+type NearestStation struct {
+	// RouteName 路線名
+	RouteName string `json:"route_name"`
+
+	// StationName 駅名
+	StationName string `json:"station_name"`
+
+	// WalkingTimeFromStation 駅からの徒歩時間（分）
+	WalkingTimeFromStation int `json:"walking_time_from_station"`
+}
+
 // NightView 夜景情報
 type NightView struct {
 	// Address 住所
@@ -31,6 +43,9 @@ type NightView struct {
 
 	// Longitude 経度
 	Longitude float32 `json:"longitude"`
+
+	// NearestStations 最寄り駅情報
+	NearestStations *[]NearestStation `json:"nearest_stations,omitempty"`
 
 	// PostCode 郵便番号
 	PostCode string `json:"post_code"`
