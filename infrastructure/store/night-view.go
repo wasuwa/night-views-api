@@ -6,9 +6,6 @@ import (
 	"errors"
 
 	"github.com/uptrace/bun"
-	"github.com/uptrace/bun/dialect/pgdialect"
-	"github.com/uptrace/bun/driver/pgdriver"
-	"github.com/wasuwa/night-view-api/config"
 	"github.com/wasuwa/night-view-api/domain/model"
 	"github.com/wasuwa/night-view-api/domain/repository"
 )
@@ -64,16 +61,4 @@ func (ns *nightViewStore) FindByID(ctx context.Context, id string) (*model.Night
 		return nil, err
 	}
 	return n.domainModel(), nil
-}
-
-// NewDB データベース接続を初期化する
-func NewDB() *bun.DB {
-	pgConn := pgdriver.NewConnector(
-		pgdriver.WithAddr(config.PostgresHost),
-		pgdriver.WithUser(config.PostgresUser),
-		pgdriver.WithPassword(config.PostgresPassword),
-		pgdriver.WithDatabase(config.PostgresDB),
-		pgdriver.WithInsecure(true),
-	)
-	return bun.NewDB(sql.OpenDB(pgConn), pgdialect.New())
 }

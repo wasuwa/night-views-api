@@ -9,6 +9,7 @@ import (
 	"github.com/wasuwa/night-view-api/api"
 	"github.com/wasuwa/night-view-api/config"
 	"github.com/wasuwa/night-view-api/handler"
+	"github.com/wasuwa/night-view-api/infrastructure/database"
 	"github.com/wasuwa/night-view-api/infrastructure/store"
 	"github.com/wasuwa/night-view-api/middlewares"
 	"github.com/wasuwa/night-view-api/usecase"
@@ -19,7 +20,7 @@ func main() {
 		log.Fatalf("Failed to load environment variables: %v", err)
 	}
 
-	db := store.NewDB()
+	db := database.NewDB()
 	nightViewRepository := store.NewNightViewStore(db)
 	nightViewUsecase := usecase.NewNightViewUsecase(nightViewRepository)
 	nightViewHandler := handler.NewNightViewHandler(nightViewUsecase)
