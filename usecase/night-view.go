@@ -5,13 +5,13 @@ import (
 	"log/slog"
 
 	apierrors "github.com/wasuwa/night-view-api/api-errors"
-	"github.com/wasuwa/night-view-api/domain/model"
 	"github.com/wasuwa/night-view-api/domain/repository"
+	"github.com/wasuwa/night-view-api/usecase/dto"
 )
 
 // NightViewUsecase 夜景のユースケース
 type NightViewUsecase interface {
-	FetchNightViewByID(ctx context.Context, id string) (*model.NightView, *apierrors.APIError)
+	FetchNightViewByID(ctx context.Context, id string) (*dto.NightView, *apierrors.APIError)
 }
 
 type nightViewUsecase struct {
@@ -28,7 +28,7 @@ func NewNightViewUsecase(nvRepo repository.NightViewRepository, nsRepo repositor
 }
 
 // FetchNightViewByID IDに紐づく夜景を取得する
-func (nu *nightViewUsecase) FetchNightViewByID(ctx context.Context, id string) (*model.NightView, *apierrors.APIError) {
+func (nu *nightViewUsecase) FetchNightViewByID(ctx context.Context, id string) (*dto.NightView, *apierrors.APIError) {
 	nightView, err := nu.nightViewRepository.FindByID(ctx, id)
 	if err != nil {
 		slog.ErrorContext(ctx, "夜景情報の取得ができません", slog.String("Error", err.Error()), slog.String("ID", id))
@@ -44,6 +44,17 @@ func (nu *nightViewUsecase) FetchNightViewByID(ctx context.Context, id string) (
 		slog.ErrorContext(ctx, "最寄り駅一覧の取得ができません", slog.String("Error", err.Error()), slog.String("NightViewID", id))
 		return nil, apierrors.InternalServerError
 	}
-	nightView.NearestStations = nearestStations
-	return nightView, nil
+
+	dtoNearestStations := dto.NewNearestStations(nearestStations)
+	dtoNightView := dto.NewNightView(
+		nightView.ID,
+		nightView.Title,
+		nightView.ImageURL,
+		nightView.PostCode,
+		nightView.Address,
+		nightView.Latitude,
+		nightView.Longitude,
+		dtoNearestStations,
+	)
+	return dtoNightView, nil
 }
